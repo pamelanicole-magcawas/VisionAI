@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from "@expo/vector-icons";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function TaskItem({ item, onToggle, onDelete }) {
   return (
@@ -9,9 +9,9 @@ export default function TaskItem({ item, onToggle, onDelete }) {
     >
       <View style={styles.taskRow}>
         <MaterialIcons
-          name={item.completed ? 'check-box' : 'check-box-outline-blank'}
+          name={item.completed ? "check-box" : "check-box-outline-blank"}
           size={20}
-          color={item.completed ? '#2E5BBA' : '#5A6472'}
+          color={item.completed ? "#2E5BBA" : "#5A6472"}
         />
         <Text style={styles.taskText}>{item.title}</Text>
       </View>
@@ -21,14 +21,12 @@ export default function TaskItem({ item, onToggle, onDelete }) {
 
 const styles = StyleSheet.create({
   taskRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 10,
     paddingVertical: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: "#eee",
   },
-  taskText: {
-    fontSize: 15,
-  },
+  taskText: { fontSize: 15 },
 });

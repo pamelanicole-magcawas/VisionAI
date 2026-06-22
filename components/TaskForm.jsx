@@ -1,5 +1,5 @@
-import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from "@expo/vector-icons";
+import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function TaskForm({ task, setTask, onAdd }) {
   return (
@@ -18,23 +18,20 @@ export default function TaskForm({ task, setTask, onAdd }) {
 }
 
 const styles = StyleSheet.create({
-  inputRow: {
-    flexDirection: 'row',
-    marginBottom: 20,
-  },
+  inputRow: { flexDirection: "row", marginBottom: 20 },
   input: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 8,
     padding: 10,
     marginRight: 10,
   },
   addButton: {
-    backgroundColor: '#2E5BBA',
+    backgroundColor: "#2E5BBA",
     borderRadius: 8,
     paddingHorizontal: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

@@ -1,22 +1,21 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
-  Modal,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Text,
-  Pressable,
-  StyleSheet,
-} from 'react-native';
+    Modal,
+    Pressable,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+} from "react-native";
 
 export default function AddTaskModal({ visible, onClose, onSubmit }) {
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
 
   function handleSubmit() {
-    if (text.trim() === '') return;
-
+    if (text.trim() === "") return;
     onSubmit(text);
-    setText('');
+    setText("");
   }
 
   return (
@@ -35,16 +34,11 @@ export default function AddTaskModal({ visible, onClose, onSubmit }) {
             onChangeText={setText}
             autoFocus
           />
-
           <View style={styles.buttonRow}>
             <TouchableOpacity onPress={onClose}>
               <Text style={styles.cancelText}>Cancel</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.addButton}
-              onPress={handleSubmit}
-            >
+            <TouchableOpacity style={styles.addButton} onPress={handleSubmit}>
               <Text style={styles.addButtonText}>Add</Text>
             </TouchableOpacity>
           </View>
@@ -57,41 +51,29 @@ export default function AddTaskModal({ visible, onClose, onSubmit }) {
 const styles = StyleSheet.create({
   backdrop: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    justifyContent: 'center',
+    backgroundColor: "rgba(0,0,0,0.4)",
+    justifyContent: "center",
     padding: 24,
   },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 20,
-  },
+  card: { backgroundColor: "#fff", borderRadius: 12, padding: 20 },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 8,
     padding: 10,
     marginBottom: 16,
   },
-  buttonRow: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    gap: 16,
-  },
-  cancelText: {
-    color: '#5A6472',
-    fontWeight: 'bold',
-    paddingVertical: 10,
-  },
+  buttonRow: { flexDirection: "row", justifyContent: "flex-end", gap: 16 },
+  cancelText: { color: "#5A6472", fontWeight: "bold", paddingVertical: 10 },
   addButton: {
-    backgroundColor: '#2E5BBA',
+    backgroundColor: "#2E5BBA",
     borderRadius: 8,
     paddingHorizontal: 16,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   addButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: "#fff",
+    fontWeight: "bold",
     paddingVertical: 10,
     paddingHorizontal: 4,
   },
