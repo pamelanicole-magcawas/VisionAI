@@ -1,13 +1,7 @@
-import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
+import TaskForm from "../../components/TaskForm";
+import TaskItem from "../../components/TaskItem";
 import { supabase } from "../../lib/supabase";
 
 type Task = {
@@ -26,26 +20,16 @@ export default function App() {
       .from("tasks")
       .select("*")
       .order("created_at", { ascending: false });
-    if (error) {
-      console.log("Error loading tasks:", error.message);
-      return;
-    }
+    if (error) return console.log(error.message);
     setTasks(data);
   }
-
-  useEffect(() => {
-    loadTasks();
-  }, []);
 
   async function addTask() {
     if (task.trim() === "") return;
     const { error } = await supabase
       .from("tasks")
       .insert([{ title: task, completed: false }]);
-    if (error) {
-      console.log("Error adding task:", error.message);
-      return;
-    }
+    if (error) return console.log(error.message);
     setTask("");
     loadTasks();
   }
@@ -55,57 +39,35 @@ export default function App() {
       .from("tasks")
       .update({ completed: !item.completed })
       .eq("id", item.id);
-    if (error) {
-      console.log("Error updating task:", error.message);
-      return;
-    }
+    if (error) return console.log(error.message);
     loadTasks();
   }
 
   async function deleteTask(id: string) {
     const { error } = await supabase.from("tasks").delete().eq("id", id);
-    if (error) {
-      console.log("Error deleting task:", error.message);
-      return;
-    }
+    if (error) return console.log(error.message);
     loadTasks();
   }
+
+  function handleAddTask() {
+    addTask();
+  }
+
+  useEffect(() => {
+    loadTasks();
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={headerStyles.header}>
         <Text style={headerStyles.title}>TaskFlow</Text>
       </View>
-
-      <View style={styles.inputRow}>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter Task"
-          value={task}
-          onChangeText={setTask}
-        />
-        <TouchableOpacity style={styles.addButton} onPress={addTask}>
-          <MaterialIcons name="add" size={22} color="#fff" />
-        </TouchableOpacity>
-      </View>
-
+      <TaskForm task={task} setTask={setTask} onAdd={handleAddTask} />
       <FlatList
         data={tasks}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => toggleTask(item)}
-            onLongPress={() => deleteTask(item.id)}
-          >
-            <View style={styles.taskRow}>
-              <MaterialIcons
-                name={item.completed ? "check-box" : "check-box-outline-blank"}
-                size={20}
-                color={item.completed ? "#2E5BBA" : "#5A6472"}
-              />
-              <Text style={styles.taskText}>{item.title}</Text>
-            </View>
-          </TouchableOpacity>
+          <TaskItem item={item} onToggle={toggleTask} onDelete={deleteTask} />
         )}
       />
     </View>
@@ -120,47 +82,9 @@ const headerStyles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
   },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#1F2A44",
-  },
+  title: { fontSize: 28, fontWeight: "bold", color: "#1F2A44" },
 });
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 20,
-    backgroundColor: "#fff",
-  },
-  inputRow: {
-    flexDirection: "row",
-    marginBottom: 20,
-  },
-  input: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    padding: 10,
-    marginRight: 10,
-  },
-  addButton: {
-    backgroundColor: "#2E5BBA",
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  taskRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  taskText: {
-    fontSize: 15,
-  },
+  container: { flex: 1, paddingHorizontal: 20, backgroundColor: "#fff" },
 });
