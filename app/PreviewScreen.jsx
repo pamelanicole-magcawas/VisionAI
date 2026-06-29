@@ -11,7 +11,7 @@ export default function PreviewScreen() {
     const base64Image = await imageToBase64(photoUri);
     console.log("Base64 length:", base64Image.length);
     router.push({
-      pathname: "/Result",
+      pathname: "/ResultScreen",
       params: { base64Image },
     });
   }
